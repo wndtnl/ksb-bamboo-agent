@@ -13,13 +13,13 @@ ENV BAMBOO_USER=bamboo
 ENV BAMBOO_UID=1000
 
 ENV BAMBOO_GROUP=bamboo
-ENV BAMBOO_GID 1000
+ENV BAMBOO_GID=1000
 
 ENV BAMBOO_USER_HOME=/home/${BAMBOO_USER}
 ENV BAMBOO_AGENT_HOME=${BAMBOO_USER_HOME}/bamboo-agent-home
 
 ENV AGENT_JAR=${BAMBOO_USER_HOME}/atlassian-bamboo-agent-installer.jar
-ENV SCRIPT_WRAPPER=${BAMBOO_USER_HOME}/runAgent.sh
+ENV SCRIPT_WRAPPER=${BAMBOO_USER_HOME}/run-agent.sh
 ENV INIT_BAMBOO_CAPABILITIES=${BAMBOO_USER_HOME}/init-bamboo-capabilities.properties
 ENV BAMBOO_CAPABILITIES=${BAMBOO_AGENT_HOME}/bin/bamboo-capabilities.properties
 
@@ -43,10 +43,10 @@ RUN curl -L --silent ${DOWNLOAD_URL} -o ${AGENT_JAR}
 
 # Install files
 
-COPY bamboo-update-capability.sh ${BAMBOO_USER_HOME}/bamboo-update-capability.sh 
-COPY runAgent.sh ${SCRIPT_WRAPPER} 
+COPY scripts/update-capability.sh ${BAMBOO_USER_HOME}/update-capability.sh
+COPY scripts/run-agent.sh ${SCRIPT_WRAPPER}
 
-RUN chmod +x ${BAMBOO_USER_HOME}/bamboo-update-capability.sh && \
+RUN chmod +x ${BAMBOO_USER_HOME}/update-capability.sh && \
     chmod +x ${SCRIPT_WRAPPER} && \
     mkdir -p ${BAMBOO_USER_HOME}/bamboo-agent-home/bin
 
@@ -58,8 +58,8 @@ USER ${BAMBOO_USER}
 
 # Update agent capabilities
 
-RUN ${BAMBOO_USER_HOME}/bamboo-update-capability.sh "system.jdk.JDK 1.8" /usr/lib/jvm/java-1.8-openjdk/bin/java
+RUN ${BAMBOO_USER_HOME}/update-capability.sh "system.jdk.JDK 1.8" /usr/lib/jvm/java-1.8-openjdk/bin/java
 
 WORKDIR ${BAMBOO_USER_HOME}
 
-ENTRYPOINT ["./runAgent.sh"]
+ENTRYPOINT ["./run-agent.sh"]

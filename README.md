@@ -12,33 +12,30 @@ with images which are tested against, and guaranteed compatible with the plugin.
 Also, Atlassian does not provide *prewarmed*, *dind* nor *windows (server)* compatible images, which we strive to
 maintain in this repository as well.
 
-We advice users of the KSB plugin to fork or copy this repository and adjust, build and publish derived
-images internally as needed. 
+> Prewarmed agent images are images for which the classpath is synchronized with the Bamboo server as part of the image
+> build. As such, the initial boot time of the agent is (significantly) reduced.
+
+> Dind agent images are images in which the Docker client is installed, allowing communication with the docker
+> daemon running in a separate container.
+
+We provide prebuilt images on [DockerHub](https://hub.docker.com/r/wndtnl/ksb-bamboo-agent), which can be used to get started
+quickly. We however advice more long-term users of the KSB plugin to fork or copy this repository and adjust,
+build and publish derived images internally as needed. 
 
 ## Image Tags
 
 The images published on DockerHub use the following tag pattern:
 
 ```
-<bamboo-version>[-prewarm][-dind]
+(nix|win)-<bamboo-version>[-prewarm][-dind]
 ```
 
-Examples:
+Where the first section (*nix* or *win*) denotes the image base OS flavour: respectively (ubuntu) linux and windows (server).
+Both are handled separately in the sub-folders of this repository.
 
-- 8.0.0: base image with the 8.0.0 version of the Bamboo agent JAR installed.
-- 8.0.0-prewarm: base image which was prewarmed against the 8.0.0 version of the Bamboo server.
-- 8.0.0-prewarm-dind: prewarmed image for Bamboo 8.0.0, with the Docker client installed.
-- 8.0.0-dind: base image with the Docker client installed.
+Tag examples:
 
-## Image Flavours
-
-Two flavours of the agent images are available: ubuntu and windows, depending on the base
-image used.
-
-### Ubuntu
-
-Please see the *ubuntu* subfolder of this repository.
-
-### Windows
-
-Please see the *windows* subfolder of this repository.
+- nix-8.0.0: base image derived from ubuntu with the 8.0.0 version of the Bamboo agent JAR installed.
+- nix-8.0.0-prewarm: image derived from the base image which was prewarmed against the 8.0.0 version of the Bamboo server.
+- nix-8.0.0-dind: image derived from the base image with the Docker client installed.
+- nix-8.0.0-prewarm-dind: image derived from the dind image, prewarmed against the 8.0.0 version of the Bamboo server.

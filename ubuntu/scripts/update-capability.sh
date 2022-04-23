@@ -7,7 +7,7 @@ displayUsage() {
         echo "\nUsage: $(basename "$0") capability value [file.properties]"
         echo "\n  capability - capabaliyty name"
         echo "  value - value of capability"
-        echo "  file.properties - optional path to properties file (default: ${BAMBOO_AGENT_HOME}/init-bamboo-capabilities.properties)\n"
+        echo "  file.properties - optional path to properties file (default: ${BAMBOO_USER_HOME}/init-bamboo-capabilities.properties)\n"
 }
 
 if [  $# -le 1 ]; then
@@ -16,7 +16,7 @@ if [  $# -le 1 ]; then
 fi
 
 if [ $# -le 2 ]; then
-        propertiesFilePath=${BAMBOO_AGENT_HOME}/init-bamboo-capabilities.properties
+        propertiesFilePath=${BAMBOO_USER_HOME}/init-bamboo-capabilities.properties
 else
         propertiesFilePath=$3
 fi

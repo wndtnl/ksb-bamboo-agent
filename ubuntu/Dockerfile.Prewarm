@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=ksb-bamboo-agent:6.8.0
+ARG BASE_IMAGE=ksb-bamboo-agent:nix-6.8.0
 FROM $BASE_IMAGE
 
 LABEL maintainer="hello@windtunnel.io"

@@ -1,0 +1,20 @@
+ARG BASE_IMAGE=ksb-bamboo-agent:win-8.0.0
+FROM $BASE_IMAGE
+
+LABEL maintainer="hello@windtunnel.io"
+
+ARG BAMBOO_SERVER
+
+# Pre-warm the Agent
+
+ENV BAMBOO_PREWARM_DIR="${BAMBOO_USER_HOME}\\prewarm"
+
+COPY --chown=$BAMBOO_USER scripts/prewarm-agent.ps1 prewarm-agent.ps1
+RUN powershell -noexit "& "".\prewarm-agent.ps1"""
+
+RUN del prewarm-agent.log
+RUN del prewarm-agent.ps1
+
+# Override runAgent
+
+COPY --chown=$BAMBOO_USER scripts/run-agent-prewarm.bat run-agent.bat

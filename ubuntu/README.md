@@ -23,7 +23,7 @@ docker build \
     --progress=plain \
     --no-cache \
     --file Dockerfile.Prewarm \
-    --build-arg BASE_IMAGE=ksb-bamboo-agent:6.8.0 \
+    --build-arg BASE_IMAGE=ksb-bamboo-agent:nix-6.8.0 \
     --build-arg BAMBOO_SERVER=http://host.docker.internal:6990/bamboo \
     --tag ksb-bamboo-agent:nix-6.8.0-prewarm .
 ```
@@ -35,7 +35,7 @@ docker build \
     --progress=plain \
     --no-cache \
     --file Dockerfile.Dind \
-    --build-arg BASE_IMAGE=ksb-bamboo-agent:6.8.0 \
+    --build-arg BASE_IMAGE=ksb-bamboo-agent:nix-6.8.0 \
     --tag ksb-bamboo-agent:nix-6.8.0-dind .
 ```
 
@@ -46,7 +46,7 @@ docker build \
     --progress=plain \
     --no-cache \
     --file Dockerfile.Dind.Prewarm \
-    --build-arg BASE_IMAGE=ksb-bamboo-agent:6.8.0-dind \
+    --build-arg BASE_IMAGE=ksb-bamboo-agent:nix-6.8.0-dind \
     --build-arg BAMBOO_SERVER=http://host.docker.internal:6990/bamboo \
     --tag ksb-bamboo-agent:nix-6.8.0-prewarm-dind .
 ```

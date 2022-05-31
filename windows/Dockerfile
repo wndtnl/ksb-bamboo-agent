@@ -32,7 +32,6 @@ RUN powershell -Command "[Environment]::SetEnvironmentVariable('PATH', $Env:PATH
 
 RUN powershell New-LocalUser -Name $env:BAMBOO_USER -Description $env:BAMBOO_USER -NoPassword -AccountNeverExpires -UserMayNotChangePassword
 RUN powershell Set-LocalUser -Name $env:BAMBOO_USER -PasswordNeverExpires $true
-RUN powershell Add-LocalGroupMember -Group "Users" -Member $env:BAMBOO_USER -Verbose
 RUN powershell Add-LocalGroupMember -Group "Administrators" -Member $env:BAMBOO_USER -Verbose
 
 USER $BAMBOO_USER

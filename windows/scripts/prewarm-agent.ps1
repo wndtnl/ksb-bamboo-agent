@@ -28,19 +28,3 @@ while(!$p.HasExited)
 }
 
 $p.WaitForExit()
-
-# Cleanup non-library files
-
-Remove-Item -Path "$env:BAMBOO_PREWARM_DIR\bamboo-agent.cfg.xml" -Force -ErrorAction Ignore
-Remove-Item -Path "$env:BAMBOO_PREWARM_DIR\atlassian-bamboo-agent.log" -Force -ErrorAction Ignore
-Remove-Item -Path "$env:BAMBOO_PREWARM_DIR\installer.properties" -Force -ErrorAction Ignore
-
-Remove-Item –Path "$env:BAMBOO_PREWARM_DIR\bin" –Recurse -Force -ErrorAction Ignore
-Remove-Item –Path "$env:BAMBOO_PREWARM_DIR\conf" –Recurse -Force -ErrorAction Ignore
-Remove-Item –Path "$env:BAMBOO_PREWARM_DIR\caches" –Recurse -Force -ErrorAction Ignore
-Remove-Item –Path "$env:BAMBOO_PREWARM_DIR\lib" –Recurse -Force -ErrorAction Ignore
-Remove-Item –Path "$env:BAMBOO_PREWARM_DIR\logs" –Recurse -Force -ErrorAction Ignore
-
-# Optional: cleanup user installed libraries (i.e. Bamboo add-ons)
-
-Remove-Item –Path "$env:BAMBOO_PREWARM_DIR\plugins\user-installed" –Recurse -Force -ErrorAction Ignore

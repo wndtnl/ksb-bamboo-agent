@@ -1,4 +1,4 @@
-@echo on
+@echo off
 
 set BAMBOO_SERVER=%1
 
@@ -7,13 +7,15 @@ if [%BAMBOO_SERVER%] == [] (
     exit /b 1
 )
 
-if exist "%$BAMBOO_PREWARM_DIR%" (
-    if exist "%BAMBOO_AGENT_HOME%/classpath" (
+if exist "%BAMBOO_PREWARM_DIR%" (
+    if exist "%BAMBOO_AGENT_HOME%\\classpath" (
         echo "Directory %BAMBOO_AGENT_HOME%/classpath exists, skipping prewarm copy"
     ) else (
         echo "Directory %BAMBOO_AGENT_HOME%/classpath does not exist, executing prewarm copy"
         xcopy %BAMBOO_PREWARM_DIR% %BAMBOO_AGENT_HOME%\ /E/H
     )
+) else (
+    echo "Directory %BAMBOO_PREWARM_DIR% does not exist"
 )
 
 if [%SECURITY_TOKEN%] == [] (

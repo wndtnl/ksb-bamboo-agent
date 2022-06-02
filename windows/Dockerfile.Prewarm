@@ -12,8 +12,25 @@ ENV BAMBOO_PREWARM_DIR="${BAMBOO_USER_HOME}\\prewarm"
 COPY --chown=$BAMBOO_USER scripts/prewarm-agent.ps1 prewarm-agent.ps1
 RUN powershell -noexit "& "".\prewarm-agent.ps1"""
 
-RUN del prewarm-agent.log
-RUN del prewarm-agent.ps1
+# Delete unnecessary files
+
+RUN if exist prewarm-agent.log del /q prewarm-agent.log
+RUN if exist prewarm-agent.ps1 del /q prewarm-agent.ps1
+
+RUN if exist prewarm\bamboo-agent.cfg.xml del /q prewarm\bamboo-agent.cfg.xml
+RUN if exist prewarm\atlassian-bamboo-agent.log del /q prewarm\atlassian-bamboo-agent.log
+RUN if exist prewarm\installer.properties del /q prewarm\installer.properties
+RUN if exist prewarm\uuid-temp.properties del /q prewarm\uuid-temp.properties
+
+RUN if exist prewarm\bin\ rmdir /s /q prewarm\bin
+RUN if exist prewarm\conf\ rmdir /s /q prewarm\conf
+RUN if exist prewarm\caches\ rmdir /s /q prewarm\caches
+RUN if exist prewarm\lib\ rmdir /s /q prewarm\lib
+RUN if exist prewarm\logs\ rmdir /s /q prewarm\logs
+
+# Optional: cleanup user installed libraries (i.e. Bamboo add-ons)
+
+RUN if exist prewarm\plugins\user-installed\ rmdir /s /q prewarm\plugins\user-installed
 
 # Override runAgent
 

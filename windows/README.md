@@ -25,7 +25,7 @@ docker build \
     --file Dockerfile.Prewarm \
     --build-arg BASE_IMAGE=ksb-bamboo-agent:win-8.0.0 \
     --build-arg BAMBOO_SERVER=http://host.docker.internal:6990/bamboo \
-    --tag ksb-bamboo-agent:nix-8.0.0-prewarm .
+    --tag ksb-bamboo-agent:win-8.0.0-prewarm .
 ```
 
 ## Run
@@ -33,5 +33,5 @@ docker build \
 ```
 docker run -it --rm --name bamboo-agent \
     -v bamboo-agent-home:"c:\\Users\\bamboo\\bamboo-agent-home" \
-    ksb-bamboo-agent:win-8.0.4 http://host.docker.internal:6990/bamboo
+    ksb-bamboo-agent:win-8.0.4-prewarm http://host.docker.internal:6990/bamboo
 ```

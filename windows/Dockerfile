@@ -5,6 +5,10 @@ LABEL maintainer="hello@windtunnel.io"
 
 ARG BAMBOO_VERSION=6.8.0
 
+ARG JAVA_AUTH_PARAM
+
+ARG JAVA_DOWNLOAD_URL="https://download.oracle.com/otn/java/jdk/8u91-b15/jre-8u91-windows-x64.exe?AuthParam=${JAVA_AUTH_PARAM}"
+
 ARG DOWNLOAD_URL="https://packages.atlassian.com/mvn/maven-atlassian-external/com/atlassian/bamboo/atlassian-bamboo-agent-installer/${BAMBOO_VERSION}/atlassian-bamboo-agent-installer-${BAMBOO_VERSION}.jar"
 
 # Environment
@@ -20,7 +24,7 @@ ENV SCRIPT_WRAPPER="${BAMBOO_USER_HOME}\\run-agent.bat"
 
 # Install prerequisites
 
-RUN powershell (new-object System.Net.WebClient).Downloadfile('http://javadl.oracle.com/webapps/download/AutoDL?BundleId=210185', 'C:\jre-8u91-windows-x64.exe')
+RUN powershell (new-object System.Net.WebClient).Downloadfile($env:JAVA_DOWNLOAD_URL, 'C:\jre-8u91-windows-x64.exe')
 RUN powershell start-process -filepath C:\jre-8u91-windows-x64.exe -passthru -wait -argumentlist "/s,INSTALLDIR=c:\Java\jre1.8.0_91,/L,install64.log"
 RUN del C:\jre-8u91-windows-x64.exe
 

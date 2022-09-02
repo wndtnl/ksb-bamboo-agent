@@ -5,8 +5,14 @@ if [ -z ${1+x} ]; then
     exit 1
 fi
 
+if [ -z ${2+x} ]; then
+    echo "Please run this script with the Bamboo server URL as second argument"
+    exit 1
+fi
+
 OS_FLAVOUR="nix"
 BAMBOO_VERSION="${1}"
+BAMBOO_SERVER="${2}"
 
 # Base image
 
@@ -27,7 +33,7 @@ docker build \
     --no-cache \
     --file Dockerfile.Prewarm \
     --build-arg BASE_IMAGE="ksb-bamboo-agent:${OS_FLAVOUR}-${BAMBOO_VERSION}" \
-    --build-arg BAMBOO_SERVER=http://host.docker.internal:6990/bamboo \
+    --build-arg BAMBOO_SERVER="${BAMBOO_SERVER}/bamboo" \
     --tag "ksb-bamboo-agent:${OS_FLAVOUR}-${BAMBOO_VERSION}-prewarm" .
 
 docker tag "ksb-bamboo-agent:${OS_FLAVOUR}-${BAMBOO_VERSION}-prewarm" "wndtnl/ksb-bamboo-agent:${OS_FLAVOUR}-${BAMBOO_VERSION}-prewarm"
@@ -52,7 +58,7 @@ docker build \
     --no-cache \
     --file Dockerfile.Dind.Prewarm \
     --build-arg BASE_IMAGE="ksb-bamboo-agent:${OS_FLAVOUR}-${BAMBOO_VERSION}-dind" \
-    --build-arg BAMBOO_SERVER=http://host.docker.internal:6990/bamboo \
+    --build-arg BAMBOO_SERVER="${BAMBOO_SERVER}/bamboo" \
     --tag "ksb-bamboo-agent:${OS_FLAVOUR}-${BAMBOO_VERSION}-prewarm-dind" .
 
 docker tag "ksb-bamboo-agent:${OS_FLAVOUR}-${BAMBOO_VERSION}-prewarm-dind" "wndtnl/ksb-bamboo-agent:${OS_FLAVOUR}-${BAMBOO_VERSION}-prewarm-dind"

@@ -2,6 +2,13 @@
 
 ## Build
 
+### All
+
+```
+$ ./build.sh 9.1.1 http://host.docker.internal:6990/bamboo
+$ ./build.sh 9.3.3 http://host.docker.internal:8085
+```
+
 ### Base Image
 
 ```
@@ -49,4 +56,10 @@ docker build \
     --build-arg BASE_IMAGE=ksb-bamboo-agent:nix-6.8.0-dind \
     --build-arg BAMBOO_SERVER=http://host.docker.internal:6990/bamboo \
     --tag ksb-bamboo-agent:nix-6.8.0-prewarm-dind .
+```
+
+### Run
+
+```
+$ ./run.sh 9.5.1 http://host.docker.internal:6990/bamboo
 ```

@@ -3,7 +3,8 @@ FROM $BASE_IMAGE
 
 LABEL maintainer="hello@windtunnel.io"
 
-ARG BAMBOO_VERSION=6.8.0
+ARG BAMBOO_VERSION=12.1.0
+ARG JAVA_VERSION=openjdk-21-jdk
 
 ARG DOWNLOAD_URL=https://packages.atlassian.com/mvn/maven-atlassian-external/com/atlassian/bamboo/atlassian-bamboo-agent-installer/${BAMBOO_VERSION}/atlassian-bamboo-agent-installer-${BAMBOO_VERSION}.jar
 
@@ -27,8 +28,9 @@ ENV BAMBOO_CAPABILITIES=${BAMBOO_AGENT_HOME}/bin/bamboo-capabilities.properties
 
 RUN apt-get update -y && \
     apt-get upgrade -y && \
-    apt-get install -y openjdk-8-jdk && \
-    apt-get install -y curl
+    apt-get install -y ${JAVA_VERSION} && \
+    apt-get install -y curl && \
+    apt-get install -y vim
 
 # Create user
 
@@ -44,6 +46,7 @@ RUN curl -L --silent ${DOWNLOAD_URL} -o ${AGENT_JAR}
 # Install files
 
 COPY scripts/update-capability.sh ${BAMBOO_USER_HOME}/update-capability.sh
+COPY files/log4j2.properties ${BAMBOO_USER_HOME}/log4j2.properties
 COPY scripts/run-agent.sh ${SCRIPT_WRAPPER}
 
 RUN chmod +x ${BAMBOO_USER_HOME}/update-capability.sh && \
@@ -58,7 +61,7 @@ USER ${BAMBOO_USER}
 
 # Update agent capabilities
 
-RUN ${BAMBOO_USER_HOME}/update-capability.sh "system.jdk.JDK 1.8" /usr/lib/jvm/java-1.8-openjdk/bin/java
+RUN ${BAMBOO_USER_HOME}/update-capability.sh "system.jdk.JDK 1.21" /usr/lib/jvm/java-1.21-openjdk/bin/java
 
 WORKDIR ${BAMBOO_USER_HOME}
 

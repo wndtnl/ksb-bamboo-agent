@@ -33,7 +33,7 @@ docker build \
     --no-cache \
     --file Dockerfile.Prewarm \
     --build-arg BASE_IMAGE="ksb-bamboo-agent:${OS_FLAVOUR}-${BAMBOO_VERSION}" \
-    --build-arg BAMBOO_SERVER="${BAMBOO_SERVER}/bamboo" \
+    --build-arg BAMBOO_SERVER="${BAMBOO_SERVER}" \
     --tag "ksb-bamboo-agent:${OS_FLAVOUR}-${BAMBOO_VERSION}-prewarm" .
 
 docker tag "ksb-bamboo-agent:${OS_FLAVOUR}-${BAMBOO_VERSION}-prewarm" "wndtnl/ksb-bamboo-agent:${OS_FLAVOUR}-${BAMBOO_VERSION}-prewarm"
@@ -58,7 +58,7 @@ docker build \
     --no-cache \
     --file Dockerfile.Dind.Prewarm \
     --build-arg BASE_IMAGE="ksb-bamboo-agent:${OS_FLAVOUR}-${BAMBOO_VERSION}-dind" \
-    --build-arg BAMBOO_SERVER="${BAMBOO_SERVER}/bamboo" \
+    --build-arg BAMBOO_SERVER="${BAMBOO_SERVER}" \
     --tag "ksb-bamboo-agent:${OS_FLAVOUR}-${BAMBOO_VERSION}-prewarm-dind" .
 
 docker tag "ksb-bamboo-agent:${OS_FLAVOUR}-${BAMBOO_VERSION}-prewarm-dind" "wndtnl/ksb-bamboo-agent:${OS_FLAVOUR}-${BAMBOO_VERSION}-prewarm-dind"
